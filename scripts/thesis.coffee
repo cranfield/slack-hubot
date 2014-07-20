@@ -48,3 +48,6 @@ module.exports = (robot) ->
     msg.send "Ok, I stop that"
     clearInterval(deadlineIntervalId)
     deadlineIntervalId = null
+
+  robot.respond /how much time for our thesis\?/, (msg) ->
+    printTimeBeforeDeadline(msg)
