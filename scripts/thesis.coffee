@@ -10,7 +10,7 @@
 module.exports = (robot) ->
   deadlineIntervalId = null
   deadline = new Date()
-  deadline.setDate(15)
+  deadline.setDate(18)
   deadline.setMonth(7)
   deadline.setFullYear(2014)
   deadline.setUTCHours(14)
@@ -22,16 +22,12 @@ module.exports = (robot) ->
   printTimeBeforeDeadline = (msg) ->
     now = new Date()
     durationBeforeDeadline = deadline.getTime() - now.getTime()
-    console.log(now)
-    console.log(deadline)
-    console.log(durationBeforeDeadline)
     if durationBeforeDeadline > 0
       nbOfDays = durationBeforeDeadline / dayDurationMilli
       nbOfHours = (durationBeforeDeadline % dayDurationMilli) / hourDurationMilli
       nbOfMinutes = (durationBeforeDeadline % hourDurationMilli) / minuteDurationMilli
       nbOfSeconds = (durationBeforeDeadline % minuteDurationMilli) / 1000
-      console.log("Ok guys, " + nbOfDays + " days, " + nbOfHours + " hours, " + nbOfMinutes + " minutes and " + nbOfSeconds + "seconds left, good luck")
-      msg.send("Ok guys, " + nbOfDays + " days, " + nbOfHours + " hours, " + nbOfMinutes + " minutes and " + nbOfSeconds + "seconds left, good luck")
+      msg.send("Ok guys, " + (nbOfDays | 0) + " days, " + (nbOfHours | 0) + " hours, " + (nbOfMinutes | 0) + " minutes and " + (nbOfSeconds | 0) + " seconds left, good luck")
     else
       msg.send "Thesis is over, YIIIIIHHAAAAA!!!"
       clearInterval(deadlineIntervalId)
