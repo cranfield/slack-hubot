@@ -18,7 +18,7 @@ module.exports = (robot) ->
   hourDurationMilli = 3600 * 1000
   minuteDurationMilli = 60 * 1000
 
-  robot.respond /start thesis counter/, (msg) ->
+  robot.respond /start thesis countdown/, (msg) ->
     if running
       msg.send "It's already running"
       return
@@ -40,6 +40,6 @@ module.exports = (robot) ->
         running = false
     , dayDurationMilli
 
-  robot.respond /stop thesis counter/, (msg) ->
+  robot.respond /stop thesis countdown/, (msg) ->
     running = false
     clearInterval(deadlineIntervalId)
