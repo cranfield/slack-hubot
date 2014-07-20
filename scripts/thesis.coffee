@@ -21,14 +21,17 @@ module.exports = (robot) ->
   printTimeBeforeDeadline = (msg) ->
     now = new Date()
     durationBeforeDeadline = deadline.getTime() - now.getTime()
+    console.log(deadline)
+    console.log(now)
+    console.log("duration " + durationBeforeDeadline)
     if durationBeforeDeadline > 0
       nbOfDays = durationBeforeDeadline / dayDurationMilli
       nbOfHours = (durationBeforeDeadline % dayDurationMilli) / hourDurationMilli
       nbOfMinutes = (durationBeforeDeadline % hourDurationMilli) / minuteDurationMilli
       nbOfSeconds = (durationBeforeDeadline % minuteDurationMilli) / 1000
-      msg.send "Ok guys, " + nbOfDays + " days, " + nbOfHours + " hours, " + nbOfMinutes + " minutes and " + nbOfSeconds + "seconds left, good luck"
+      # msg.send "Ok guys, " + nbOfDays + " days, " + nbOfHours + " hours, " + nbOfMinutes + " minutes and " + nbOfSeconds + "seconds left, good luck"
     else
-      msg.send "Thesis is over, YIIIIIHHAAAAA!!!"
+      # msg.send "Thesis is over, YIIIIIHHAAAAA!!!"
       clearInterval(deadlineIntervalId)
       running = false
 
@@ -45,5 +48,6 @@ module.exports = (robot) ->
     , dayDurationMilli
 
   robot.respond /stop thesis countdown/, (msg) ->
+    msg.send "Ok, I stop that"
     running = false
     clearInterval(deadlineIntervalId)
