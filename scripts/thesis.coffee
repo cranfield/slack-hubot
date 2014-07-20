@@ -9,9 +9,8 @@
 
 module.exports = (robot) ->
   deadlineIntervalId = null
-  running = false
   deadline = new Date()
-  deadline.setDate(15, 7, 2014)
+  deadline.setDate(15, 8, 2014)
   deadline.setUTCHours(14)
   deadline.setMinutes(0)
   dayDurationMilli = 24 * 3600 * 1000
@@ -21,26 +20,23 @@ module.exports = (robot) ->
   printTimeBeforeDeadline = (msg) ->
     now = new Date()
     durationBeforeDeadline = deadline.getTime() - now.getTime()
-    console.log(deadline)
-    console.log(now)
-    console.log("duration " + durationBeforeDeadline)
     if durationBeforeDeadline > 0
       nbOfDays = durationBeforeDeadline / dayDurationMilli
       nbOfHours = (durationBeforeDeadline % dayDurationMilli) / hourDurationMilli
       nbOfMinutes = (durationBeforeDeadline % hourDurationMilli) / minuteDurationMilli
       nbOfSeconds = (durationBeforeDeadline % minuteDurationMilli) / 1000
-      # msg.send "Ok guys, " + nbOfDays + " days, " + nbOfHours + " hours, " + nbOfMinutes + " minutes and " + nbOfSeconds + "seconds left, good luck"
+      console.log("Ok guys, " + nbOfDays + " days, " + nbOfHours + " hours, " + nbOfMinutes + " minutes and " + nbOfSeconds + "seconds left, good luck")
+      msg.send("Ok guys, " + nbOfDays + " days, " + nbOfHours + " hours, " + nbOfMinutes + " minutes and " + nbOfSeconds + "seconds left, good luck")
     else
-      # msg.send "Thesis is over, YIIIIIHHAAAAA!!!"
+      msg.send "Thesis is over, YIIIIIHHAAAAA!!!"
       clearInterval(deadlineIntervalId)
-      running = false
+      deadlineIntervalId = null
 
   robot.respond /start thesis countdown/, (msg) ->
-    if running
+    if deadlineIntervalId != null
       msg.send "It's already running"
       return
 
-    running = true
     msg.send "Ok, I do that"
     printTimeBeforeDeadline(msg)
     deadlineIntervalId = setInterval() ->
@@ -49,5 +45,5 @@ module.exports = (robot) ->
 
   robot.respond /stop thesis countdown/, (msg) ->
     msg.send "Ok, I stop that"
-    running = false
     clearInterval(deadlineIntervalId)
+    deadlineIntervalId = null
