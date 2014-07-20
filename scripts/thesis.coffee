@@ -10,7 +10,9 @@
 module.exports = (robot) ->
   deadlineIntervalId = null
   deadline = new Date()
-  deadline.setDate(15, 8, 2014)
+  deadline.setDate(15)
+  deadline.setMonth(7)
+  deadline.setFullYear(2014)
   deadline.setUTCHours(14)
   deadline.setMinutes(0)
   dayDurationMilli = 24 * 3600 * 1000
@@ -20,6 +22,9 @@ module.exports = (robot) ->
   printTimeBeforeDeadline = (msg) ->
     now = new Date()
     durationBeforeDeadline = deadline.getTime() - now.getTime()
+    console.log(now)
+    console.log(deadline)
+    console.log(durationBeforeDeadline)
     if durationBeforeDeadline > 0
       nbOfDays = durationBeforeDeadline / dayDurationMilli
       nbOfHours = (durationBeforeDeadline % dayDurationMilli) / hourDurationMilli
